@@ -2,6 +2,10 @@
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
+    font-family: 'Nunito', sans-serif;
+}
+body{
+    background: var(--smoke);
 }
 :root {
     --primary:#1463F3;
@@ -10,4 +14,13 @@
     --malibu:#84A4FC;
     --alto:#CFCFCF;
     --white:#FFFFFF;
+    --smoke:#E5E4E2;
+}
+.h1{
+    font-size: 36px;
+    font-weight: bolder;
+    margin: 30px 0px;
+}
+.text-center{
+    text-align: center;
 }
