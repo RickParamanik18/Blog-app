@@ -1,7 +1,15 @@
 import "./App.css";
-
+import {Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import HomePage from "./pages/HomePage";
 function App() {
-    return <>BLOG_APP</>;
+    return <>
+        <Navbar/>
+        <Routes>
+            <Route path="/" element={<HomePage/>}/>
+            <Route path="/blog" element={"Blog"}/>
+        </Routes>
+    </>;
 }
 
 export default App;
