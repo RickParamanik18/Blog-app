@@ -15,7 +15,7 @@ const YourBlogs = () => {
                     </div>
                 </div>
                 <div className={styles.new_blog}>
-                    <Link to="/">+ New</Link>
+                    <Link to="/new">+ New</Link>
                 </div>
             </div>
         </div>

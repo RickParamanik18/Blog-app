@@ -5,7 +5,8 @@
     position: sticky;
     top:0px;
     background: var(--white);
-    padding:0px 20px
+    padding:0px 20px;
+    z-index:10;
 }
 .sub_container{
     display: flex;
