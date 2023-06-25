@@ -31,3 +31,8 @@
     display: flex;
     flex-direction: row-reverse;
 }
+@media only screen and (max-width: 1000px) {
+    .blog {
+        padding: 30px 40px;
+    }
+}

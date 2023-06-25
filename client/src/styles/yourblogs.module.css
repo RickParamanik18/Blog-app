@@ -1,0 +1,33 @@
+.container {
+    background: var(--white);
+    margin: 20px 50px;
+    border-radius: 5px;
+    padding: 20px;
+    position: sticky;
+    top: 84px;
+    box-shadow: 2px 2px 5px var(--alto);
+}
+.blog_link {
+    margin: 10px 0px;
+}
+.blogs {
+    height: 200px;
+    overflow: scroll;
+}
+.new_blog {
+    display: flex;
+    justify-content: center;
+}
+.new_blog a {
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    background: var(--primary);
+    color: var(--white);
+    margin: 10px 0px;
+}
+@media only screen and (max-width: 1000px) {
+    .container {
+        position: initial;
+    }
+}
