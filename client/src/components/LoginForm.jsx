@@ -1,8 +1,24 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+    const navigate = useNavigate();
+
     const onFinish = (values) => {
-        console.log(values);
+        axios({
+            url: `${import.meta.env.VITE_API_URL}auth/login`,
+            method: "get",
+            headers: values,
+            withCredentials: true,
+        }).then(({ data }) => {
+            if (data.status) {
+                message.success("login successful");
+                navigate("/");
+            } else {
+                message.error("login failed");
+            }
+        });
     };
 
     return (

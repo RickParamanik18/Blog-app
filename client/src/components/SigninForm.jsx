@@ -1,8 +1,25 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Upload, message } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import axios from "axios";
 
 const SigninForm = () => {
     const onFinish = (values) => {
-        console.log(values);
+        axios({
+            method: "post",
+            url: `${import.meta.env.VITE_API_URL}auth/signin`,
+            Credential: true,
+            data: values,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        }).then(({ data }) => {
+            if (data.status) {
+                message.success("signin successful");
+                navigate("/");
+            } else {
+                message.error("signin failed");
+            }
+        });
     };
 
     return (
@@ -35,8 +52,20 @@ const SigninForm = () => {
             <Form.Item
                 name="pic"
                 rules={[{ required: true, message: "pic required!!" }]}
+                getValueFromEvent={({ file }) => file.originFileObj}
             >
-                <Input size="large" type="file" />
+                {/* <Input size="large" type="file" /> */}
+                <Upload
+                    accept="image/png, image/jpeg"
+                    customRequest={({ file, onSuccess }) => {
+                        setTimeout(() => {
+                            onSuccess("ok");
+                        }, 0);
+                    }}
+                    maxCount={1}
+                >
+                    <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                </Upload>
             </Form.Item>
             <div style={{ display: "flex", justifyContent: "center" }}>
                 <Button type="primary" htmlType="submit" size="large">
