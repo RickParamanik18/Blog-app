@@ -3,6 +3,7 @@ const paramsChecker = (...checkParams) => {
         params = {
             ...req.body,
             ...req.query,
+            ...req.headers,
         };
         paramsNames = Object.keys(params);
 
