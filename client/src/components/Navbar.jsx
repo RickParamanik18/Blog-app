@@ -1,13 +1,18 @@
 import styles from "../styles/navbar.module.css";
 import logo from "../assets/logo.png";
 import avatar from "../assets/avatar.png";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "antd";
+import useAuth from "../hooks/useAuth";
+import Cookies from "js-cookie";
+import jwt_decode from "jwt-decode";
 
 const Navbar = () => {
     const searchResultRef = useRef(null);
     const userSettingsRef = useRef(null);
     const navigate = useNavigate();
+    const [userData, setUserData] = useState({});
 
     const searchHandler = (e) => {
         const query = e.target.value;
@@ -30,7 +35,19 @@ const Navbar = () => {
             ? (userSettingsRef.current.style.display = "none")
             : (searchResultRef.current.style.display = "none");
     };
-
+    const logOut = () => {
+        console.log("logout");
+        Cookies.remove("user");
+        navigate("/");
+    };
+    useEffect(() => {
+        const userCookie = Cookies.get("user");
+        if (userCookie) {
+            const { data } = jwt_decode(userCookie);
+            setUserData(data);
+        }
+    }, []);
+    console.log(`${import.meta.env.VITE_SERVER_URL}${userData?.pic}`)
     return (
         <div className={styles.container}>
             <div className={styles.logo}>
@@ -55,19 +72,41 @@ const Navbar = () => {
                         aperiam molestias voluptatem?
                     </div>
                 </div>
-                <div className={styles.avatar}>
-                    <button
-                        type="button"
-                        onClick={userSettingsHandler}
-                        onBlur={() => blurHandler("avatar")}
-                    >
-                        <img src={avatar} />
-                    </button>
-                    <div className={styles.user_settings} ref={userSettingsRef}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        di consequatur.
+                {!useAuth() ? (
+                    <div className="button">
+                        <Button
+                            type="primary"
+                            onClick={() => navigate("/login")}
+                        >
+                            Login
+                        </Button>
+                        &nbsp;
+                        <Button
+                            type="primary"
+                            onClick={() => navigate("/signin")}
+                        >
+                            Signin
+                        </Button>
                     </div>
-                </div>
+                ) : (
+                    <div className={styles.avatar}>
+                        <button
+                            type="button"
+                            onClick={userSettingsHandler}
+                            onBlur={() => blurHandler("avatar")}
+                        >
+                            <img src={`${import.meta.env.VITE_SERVER_URL}${userData?.pic}`} />
+                        </button>
+                        <div
+                            className={styles.user_settings}
+                            ref={userSettingsRef}
+                        >
+                            <ul>
+                                <li onClick={logOut}>Log out</li>
+                            </ul>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

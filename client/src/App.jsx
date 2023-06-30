@@ -7,6 +7,7 @@ import SpecificBlogPage from "./pages/SpecificBlogPage";
 import AuthLayout from "./layout/AuthLayout";
 import LoginForm from "./components/LoginForm";
 import SigninForm from "./components/SigninForm";
+import Protected from "./components/Protected";
 
 function App() {
     return (
@@ -16,22 +17,25 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/new" element={<NewBlogPage />} />
                 <Route path="/blog/:id" element={<SpecificBlogPage />} />
-                <Route
-                    path="/login"
-                    element={
-                        <AuthLayout>
-                            <LoginForm />
-                        </AuthLayout>
-                    }
-                />
-                <Route
-                    path="/signin"
-                    element={
-                        <AuthLayout>
-                            <SigninForm />
-                        </AuthLayout>
-                    }
-                />
+                <Route path="/*" element={<Protected />}>
+                    <Route
+                        path="login"
+                        element={
+                            <AuthLayout>
+                                <LoginForm />
+                            </AuthLayout>
+                        }
+                    />
+                    <Route
+                        path="signin"
+                        element={
+                            <AuthLayout>
+                                <SigninForm />
+                            </AuthLayout>
+                        }
+                    />
+                </Route>
+                {/* <Route path="/*" element={<Protected>{"404"}</Protected>} /> */}
             </Routes>
         </>
     );
